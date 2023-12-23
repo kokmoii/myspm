@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Forum-MYSPM Online Assessment System</title>
+    <style>
+    	body {
+    		font-family: Arial, sans-serif;
+	      	margin: 0;
+	      	padding: 0;
+	      	background-color: #f4f4f4;
+      	}
+      	header {
+	        background-color: #77511f;
+	        color: #fff;
+	        padding: 1em;
+	        text-align: center;
+	        display: flex;
+	        align-items: center;
+	        justify-content: center;
+      	}
+      	#logo {
+	        width: 70px;
+	        height: 70px;
+	        margin-right: 10px;
+      	}
+      	h1 {
+            color: #f8eb5ff0;
+            margin: 0;
+        }
+      	nav {
+            background-color: #000000;
+            padding: 1em;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #d6a83c;
+        }
+        .user-info {
+            color: #fff;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        .logout-icon {
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 100px; 
+        }
+        .forum-container {
+		    max-width: 800px;
+		    margin: 20px auto;
+		    padding: 20px;
+		    border: 1px solid #ccc;
+		    border-radius: 8px;
+    	}
+
+    	.forum-container:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+	    .topic {
+		    margin-bottom: 20px;
+		    border: 1px solid #ddd;
+		    padding: 10px;
+		    border-radius: 8px;
+	    }
+
+	    .reply {
+	        margin-top: 10px;
+	        border-top: 1px solid #ddd;
+	        padding-top: 10px;
+	    }
+
+	    #add-topic-container {
+	        margin-top: 20px;
+	    }
+
+	    label {
+	        display: block;
+	        margin-bottom: 5px;
+	    }
+
+	    input, textarea {
+	        width: 100%;
+	        margin-bottom: 10px;
+	    }
+
+	    button {
+	       background-color: #4caf50;
+	       color: white;
+	       border: none;
+	       padding: 10px 15px;
+	       text-align: center;
+	       text-decoration: none;
+	       display: inline-block;
+	       font-size: 16px;
+	       border-radius: 4px;
+	       cursor: pointer;
+	    }
+
+	    button:hover {
+	        background-color: #45a049;
+	    }
+
+    	footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 0.5em; 
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 12px; 
+        }
+        
+        .datetime {
+            color: #fff;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+	<header>
+		<img id="logo" src="MYSPM1.png" alt="logo">
+        <h1>Online Assessment</h1>
+	</header>
+
+	<nav>
+		<div>
+            <a href="#">Home</a>
+            <a href="#">Profile</a>
+            <a href="#">History</a>
+            <a href="#">Forum</a>
+            <a href="#">Feedback</a>
+        </div>
+        <div>
+            <span class="user-info">Welcome, User</span>
+            <span class="fa fa-sign-out" style="color:white"onclick="logout()"></span>
+           
+        </div>
+	</nav>
+	<main>
+		<div class="forum-container">
+			<div id="topics-container">
+				
+			</div>
+			<div id="add-topic-container">
+				<h2>Add Topic</h2>
+				<form id="add-topic-form">
+					<label for="topic-title">Title:</label>
+					<input type="text" id="topic-title" required>
+			        <label for="topic-content">Content:</label>
+			        <textarea id="topic-content" required></textarea>
+			        <button type="submit">Add Topic</button>
+      			</form>
+    		</div>
+  		</div>
+	</main>
+
+	<footer>
+        <div class="datetime" id="datetime"></div>
+        <h5>&copy; MySPM</h5>
+    </footer>
+    <script>
+    	document.addEventListener('DOMContentLoaded', function () {
+	    const topicsContainer = document.getElementById('topics-container');
+	    const addTopicForm = document.getElementById('add-topic-form');
+
+	    addTopicForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+	    const title = document.getElementById('topic-title').value;
+	    const content = document.getElementById('topic-content').value;
+
+	    if (title && content) {
+	      addTopic(title, content);
+	      addTopicForm.reset();
+	    }
+  		});
+
+  		function addTopic(title, content) {
+	    const topicDiv = document.createElement('div');
+	    topicDiv.classList.add('topic');
+
+	    const titleElement = document.createElement('h3');
+	    titleElement.textContent = title;
+
+	    const contentElement = document.createElement('p');
+	    contentElement.textContent = content;
+
+	    const replyBtn = document.createElement('button');
+	    replyBtn.classList.add('reply-btn');
+	    replyBtn.textContent = 'Reply';
+	    replyBtn.addEventListener('click', function () {
+	      toggleReplyForm(replyForm);
+	    });
+
+	    const replyForm = document.createElement('div');
+	    replyForm.classList.add('reply-form');
+	    replyForm.style.display = 'none';
+
+	    const addReplyForm = document.createElement('form');
+	    addReplyForm.classList.add('add-reply-form');
+	    addReplyForm.addEventListener('submit', function (event) {
+	      event.preventDefault();
+	      const replyContent = addReplyForm.querySelector('#reply-content').value;
+	      if (replyContent) {
+	        addReply(topicDiv, replyContent);
+	        addReplyForm.reset();
+	      }
+	    });
+
+	    const replyContentLabel = document.createElement('label');
+	    replyContentLabel.textContent = 'Your Reply:';
+
+	    const replyContentTextarea = document.createElement('textarea');
+	    replyContentTextarea.id = 'reply-content';
+	    replyContentTextarea.required = true;
+
+	    const submitReplyBtn = document.createElement('button');
+	    submitReplyBtn.type = 'submit';
+	    submitReplyBtn.textContent = 'Submit Reply';
+
+	    addReplyForm.appendChild(replyContentLabel);
+	    addReplyForm.appendChild(replyContentTextarea);
+	    addReplyForm.appendChild(submitReplyBtn);
+
+	    replyForm.appendChild(addReplyForm);
+
+	    const repliesContainer = document.createElement('div');
+	    repliesContainer.classList.add('replies-container');
+
+	    topicDiv.appendChild(titleElement);
+	    topicDiv.appendChild(contentElement);
+	    topicDiv.appendChild(replyBtn);
+	    topicDiv.appendChild(replyForm);
+	    topicDiv.appendChild(repliesContainer);
+
+	    topicsContainer.appendChild(topicDiv);
+	}
+	function toggleReplyForm(replyForm) {
+		replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+	}
+
+	function addReply(topicDiv, replyContent) {
+	  	const repliesContainer = topicDiv.querySelector('.replies-container');
+	    const replyElement = document.createElement('div');
+	    replyElement.classList.add('reply');
+	    replyElement.textContent = replyContent;
+	    repliesContainer.appendChild(replyElement);
+  	}
+
+  	function logout() {
+  	// Implement logout 
+  		alert('Logout clicked!');
+    }
+    function updateDateTime() {
+        const dateTimeElement = document.querySelectorAll('.datetime');
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        const formattedDateTime = now.toLocaleDateString('en-MY', options);
+        dateTimeElement.forEach(element => {
+            element.textContent = formattedDateTime;
+        });
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+});
+    </script>
+</body>
+</html>
