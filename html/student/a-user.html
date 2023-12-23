@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Question-MYSPM Online Assessment System</title>
+    <title>User Admin - MYSPM Online Assessment System</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -82,56 +82,37 @@
             color: #333;
         }
 
-        .question {
-            margin-bottom: 20px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
 
-        .options {
-            list-style-type: none;
-            padding: 0;
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
         }
 
-        .options li {
-            margin-bottom: 10px;
-        }
-
-        button {
-            background-color: #d4bf47;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-right: 10px;
-        }
-
-        button:hover {
-            background-color: #b58142;
+        th {
+            background-color: #f2f2f2;
         }
 
         footer {
             background-color: #333;
             color: #fff;
             text-align: center;
-            padding: 0.5em; 
+            padding: 0.5em;
             position: fixed;
             bottom: 0;
             width: 100%;
-            font-size: 12px; 
+            font-size: 12px;
         }
-        
+
         .datetime {
             color: #fff;
             font-size: 14px;
         }
-
-        .clear-options {
-            background-color: #6c757d;
-        }
-
-        
-
     </style>
 </head>
 <body>
@@ -142,34 +123,45 @@
 
     <nav>
         <div>
-            <a href="s-home.html">Home</a>
-            <a href="#">Profile</a>
-            <a href="s-history.html">History</a>
+            <a href="#">Home</a>
+            <a href="#">Add users</a>
+            <a href="#">Assessments</a>
+            <a href="#">Question</a>
             <a href="#">Forum</a>
             <a href="#">Feedback</a>
-  
         </div>
         <div>
-            <span class="user-info">Welcome, User</span>
-            <span class="fa fa-sign-out" style="color:white"onclick="logout()"></span>
-           
+            <span class="user-info">Welcome, Admin</span>
+            <span class="fa fa-sign-out" style="color:white" onclick="logout()"></span>
         </div>
     </nav>
 
     <main>
-        <div class="question">
-            <h2>Question 1: What is 2+3?</h2>
-            <ul class="options">
-                <li><label><input type="radio" name="q1" value="5"> 5</label></li>
-                <li><label><input type="radio" name="q1" value="50"> 50</label></li>
-                <li><label><input type="radio" name="q1" value="23"> 23</label></li>
-                <li><label><input type="radio" name="q1" value="6"> 6</label></li>
-            </ul>
-        </div>
-
-
-        <button onclick="submitAnswers()">Submit Answers</button>
-        <button class="clear-options" onclick="clearOptions()">Clear Options</button>
+        <h2>User Admin</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Haziq Hakimi</td>
+                    <td>haziq@gmail.com</td>
+                    <td>Teacher</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Ikhwan che Ross</td>
+                    <td>iwan@gmail.com</td>
+                    <td>Student</td>
+                </tr>
+            </tbody>
+        </table>
     </main>
 
     <footer>
@@ -178,25 +170,6 @@
     </footer>
 
     <script>
-        function submitAnswers() {
-            const selectedOption = document.querySelector('input[name="q1"]:checked');
-            if (!selectedOption) {
-                alert('Please select an option before submitting.');
-            } else {
-                // Front End For now
-                // Implement logic to collect and process answers
-                // to handle form submission, validate answers, and calculate scores.
-                alert('Answers submitted!');
-            }
-        }
-
-        function clearOptions() {
-            const options = document.querySelectorAll('input[name="q1"]');
-            options.forEach(option => {
-                option.checked = false;
-            });
-        }
-
         function logout() {
             // Implement logout 
             alert('Logout clicked!');
